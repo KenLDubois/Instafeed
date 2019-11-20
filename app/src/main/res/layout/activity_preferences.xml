@@ -10,32 +10,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="DisplayName"
+        android:hint="Display Name"
         android:inputType="textPersonName" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Places You are Interested in:" />
+
     <LinearLayout
-        android:id="@+id/prefs_chips"
+        android:id="@+id/prefsChips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Businesses You are Interested in:" />
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Coffee Shops" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtMaxDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Max Distance:" />
+
+    <SeekBar
+        android:id="@+id/seekDistance"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:max="5"
+        android:progress="1" />
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSavePreferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save" />

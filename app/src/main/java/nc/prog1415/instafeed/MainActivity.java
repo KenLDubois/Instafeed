@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> businessNames = new ArrayList<String>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

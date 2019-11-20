@@ -1,11 +1,14 @@
 package nc.prog1415.instafeed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +41,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.businessName.setText(businessNames.get(position));
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + businessNames.get(position));
 
-                Toast.makeText(mContext, businessNames.get(position), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(mContext, MyRatingsActivity.class);
+                mContext.startActivity(i);
+
+            }
+        });
+
+        holder.detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked on: " + businessNames.get(position));
+
+                Intent i = new Intent(mContext, RatingDetailsActivity.class);
+                mContext.startActivity(i);
+
+            }
+        });
+
+        holder.rateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String message = "Your rating for " + businessNames.get(position) + " has been saved.";
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -56,12 +82,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView businessName;
+        RatingBar ratingBar;
+        Button rateButton;
+        Button detailButton;
         LinearLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             businessName = itemView.findViewById(R.id.businessName);
+            ratingBar = itemView.findViewById(R.id.barQuickRate);
+            rateButton = itemView.findViewById(R.id.btnQuickRate);
+            detailButton = itemView.findViewById(R.id.btnDetailRate);
             parentLayout = itemView.findViewById(R.id.quick_edit_parent_layout);
         }
     }
