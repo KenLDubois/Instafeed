@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //build android menu
+        menu.add("Home");
         menu.add("My Ratings");
         menu.add("Preferences");
         menu.add("About");
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
         else if(item.getTitle().toString()=="About"){
             Intent i = new Intent(this, AboutActivity.class);
             this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="Home"){
+            Intent i = new Intent(this, MainActivity.class);
+            this.startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
