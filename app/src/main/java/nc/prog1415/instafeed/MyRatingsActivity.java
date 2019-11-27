@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MyRatingsActivity extends AppCompatActivity {
 
-    private ArrayList<String> businessNames = new ArrayList<String>();
+    private ArrayList<Business> businessArray = new ArrayList<Business>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +23,15 @@ public class MyRatingsActivity extends AppCompatActivity {
     }
 
     private void initBusinessNames(){
-        businessNames.add("Tim Hortons");
-        businessNames.add("Wendy's");
-        businessNames.add("McDonalds");
-        businessNames.add("Burger King");
+        businessArray.add(new Business("Tim Hortons","123 Street Ave. Welland, ON"));
+        businessArray.add(new Business("Wendy's","234 Street Ave. Welland, ON"));
+        businessArray.add(new Business("McDonalds","456 Street Ave. Welland, ON"));
+        businessArray.add(new Business("Burger King","789 Street Ave. Welland, ON"));
     }
 
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.ratings_recyclerView);
-        RatingsRecyclerViewAdapter adapter = new RatingsRecyclerViewAdapter(this, businessNames);
+        RatingsRecyclerViewAdapter adapter = new RatingsRecyclerViewAdapter(this, businessArray);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

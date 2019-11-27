@@ -9,7 +9,22 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rating Details" />
+        android:layout_marginBottom="15dp"
+        android:text="Detailed Rating for:" />
+
+    <TextView
+        android:id="@+id/businessName_detailRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Business Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/businessAddress_detailRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Business Address" />
 
     <EditText
         android:id="@+id/txtTitle"

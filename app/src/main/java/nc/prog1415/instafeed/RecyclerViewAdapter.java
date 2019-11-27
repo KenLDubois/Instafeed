@@ -21,11 +21,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> businessNames = new ArrayList<>();
+    private ArrayList<Business> businessArray = new ArrayList<>();
+
     private Context mContext;
 
-    public RecyclerViewAdapter(Context mContext,ArrayList<String> businessNames) {
-        this.businessNames = businessNames;
+    public RecyclerViewAdapter(Context mContext,ArrayList<Business> _businessArray) {
+        this.businessArray = _businessArray;
         this.mContext = mContext;
     }
 
@@ -40,12 +41,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.businessName.setText(businessNames.get(position));
+        holder.businessName.setText(businessArray.get(position).BusinessName);
+        holder.businessAddress.setText(businessArray.get(position).Address);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + businessNames.get(position));
+                Log.d(TAG, "onClick: clicked on: " + businessArray.get(position).BusinessName);
 
                 Intent i = new Intent(mContext, MyRatingsActivity.class);
                 mContext.startActivity(i);
@@ -56,9 +58,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.detailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + businessNames.get(position));
+                Log.d(TAG, "onClick: clicked on: " + businessArray.get(position).BusinessName);
 
                 Intent i = new Intent(mContext, RatingDetailsActivity.class);
+                i.putExtra("business",businessArray.get(position));
                 mContext.startActivity(i);
 
             }
@@ -68,7 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
-                String message = "Your rating for " + businessNames.get(position) + " has been saved.";
+                String message = "Your rating for " + businessArray.get(position).BusinessName + " has been saved.";
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             }
         });
@@ -76,12 +79,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return businessNames.size();
+        return businessArray.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView businessName;
+        TextView businessAddress;
         RatingBar ratingBar;
         Button rateButton;
         Button detailButton;
@@ -91,6 +95,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
 
             businessName = itemView.findViewById(R.id.businessName);
+            businessAddress = itemView.findViewById(R.id.businessAddress);
             ratingBar = itemView.findViewById(R.id.barQuickRate);
             rateButton = itemView.findViewById(R.id.btnQuickRate);
             detailButton = itemView.findViewById(R.id.btnDetailRate);

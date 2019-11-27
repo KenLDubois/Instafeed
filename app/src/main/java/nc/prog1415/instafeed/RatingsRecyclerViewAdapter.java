@@ -21,11 +21,11 @@ public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecy
 
     private static final String TAG = "RatingsViewAdapter";
 
-    private ArrayList<String> businessNames = new ArrayList<>();
+    private ArrayList<Business> businessArray = new ArrayList<>();
     private Context mContext;
 
-    public RatingsRecyclerViewAdapter(Context mContext,ArrayList<String> businessNames) {
-        this.businessNames = businessNames;
+    public RatingsRecyclerViewAdapter(Context mContext,ArrayList<Business> _businessArray) {
+        this.businessArray = _businessArray;
         this.mContext = mContext;
     }
 
@@ -40,13 +40,13 @@ public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecy
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.businessName.setText(businessNames.get(position));
+        holder.businessName.setText(businessArray.get(position).BusinessName);
 
     }
 
     @Override
     public int getItemCount() {
-        return businessNames.size();
+        return businessArray.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

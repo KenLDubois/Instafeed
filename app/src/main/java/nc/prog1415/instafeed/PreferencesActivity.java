@@ -1,18 +1,29 @@
 package nc.prog1415.instafeed;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PreferencesActivity extends AppCompatActivity {
+
+    public static final String shared_prefs = "sharedPrefs";
+    public static final String userName_prefsKey = "userName";
+
+    public TextView txtDisplayName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,11 +31,15 @@ public class PreferencesActivity extends AppCompatActivity {
 
         LinearLayout prefsChips = findViewById(R.id.prefsChips);
 
+        txtDisplayName = findViewById(R.id.txtDisplayName);
         final Button btnSavePreferences = findViewById(R.id.btnSavePreferences);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(shared_prefs,MODE_PRIVATE);
+        txtDisplayName.setText(sharedPreferences.getString(userName_prefsKey, "Unknown Legend"));
 
         btnSavePreferences.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                goHome();
+                savePrefs();
             }
         });
 
@@ -41,8 +56,19 @@ public class PreferencesActivity extends AppCompatActivity {
             prefsChips.addView(newSwitch);
         }
     }
-    public void goHome(){
+    public void savePrefs(){
+
+
         Intent i = new Intent(this, MainActivity.class);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(shared_prefs,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String userName = txtDisplayName.getText().toString();
+        editor.putString(userName_prefsKey, userName);
+        editor.apply();
+
+        Toast.makeText(this, "Preferences successfully changed.", Toast.LENGTH_SHORT).show();
+
         this.startActivity(i);
     }
 }
