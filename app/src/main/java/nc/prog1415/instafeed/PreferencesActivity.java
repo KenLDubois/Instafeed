@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,12 @@ public class PreferencesActivity extends AppCompatActivity {
 
     public static final String shared_prefs = "sharedPrefs";
     public static final String userName_prefsKey = "userName";
+    public static final String maxResults_prefsKey = "maxResults";
+
+    public static SharedPreferences sharedPreferences;
 
     public TextView txtDisplayName;
+    private int maxResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +39,37 @@ public class PreferencesActivity extends AppCompatActivity {
         txtDisplayName = findViewById(R.id.txtDisplayName);
         final Button btnSavePreferences = findViewById(R.id.btnSavePreferences);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(shared_prefs,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(shared_prefs,MODE_PRIVATE);
         txtDisplayName.setText(sharedPreferences.getString(userName_prefsKey, "Unknown Legend"));
+
+        final TextView lblMaxResults = (TextView) findViewById(R.id.lblMaxResults);
+        final SeekBar seekMaxResults = (SeekBar) findViewById(R.id.seekMaxResults);
+
+        maxResults = sharedPreferences.getInt(maxResults_prefsKey,3);
+
+        seekMaxResults.setProgress(maxResults);
+        lblMaxResults.setText("Max Results: " + maxResults);
+
+        seekMaxResults.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                maxResults = seekBar.getProgress();
+                lblMaxResults.setText("Max Results: " + maxResults);
+
+            }
+        });
+
+
 
         btnSavePreferences.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -65,6 +99,8 @@ public class PreferencesActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String userName = txtDisplayName.getText().toString();
         editor.putString(userName_prefsKey, userName);
+        editor.putInt(maxResults_prefsKey,maxResults);
+
         editor.apply();
 
         Toast.makeText(this, "Preferences successfully changed.", Toast.LENGTH_SHORT).show();

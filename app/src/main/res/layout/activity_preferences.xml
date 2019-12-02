@@ -31,20 +31,20 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txtMaxDistance"
+        android:id="@+id/lblMaxResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Max Distance:" />
+        android:text="Max Results: 3" />
 
     <SeekBar
-        android:id="@+id/seekDistance"
+        android:id="@+id/seekMaxResults"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:max="5"
-        android:progress="1" />
+        android:max="10"
+        android:progress="3" />
 
     <Button
         android:id="@+id/btnSavePreferences"
