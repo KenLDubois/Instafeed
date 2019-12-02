@@ -14,9 +14,8 @@ public class Rating implements Serializable {
     public Date RatingDate;
     public Double Latitude;
     public Double Longitude;
-    public transient android.location.Location Location;
-
-
+    public transient Location Location;
+    
     public Rating(Business business, float starRating){
 
         RatedBusiness = business;

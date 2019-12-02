@@ -38,7 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.businessName.setText(businessArray.get(position).BusinessName);
@@ -70,6 +70,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.rateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Rating quickRating = new Rating(
+                        businessArray.get(position),
+                        holder.ratingBar.getRating()
+                        );
+
+                MainActivity.connectionTask.sendRating(quickRating);
 
                 String message = "Your rating for " + businessArray.get(position).BusinessName + " has been saved.";
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();

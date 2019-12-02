@@ -4,34 +4,59 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public static ArrayList<Business> businessArray = new ArrayList<Business>();
 
-    private ArrayList<Business> businessArray = new ArrayList<Business>();
-
-    Button btnTestServer;
+    public static ConnectionTask connectionTask;
+    public static LocationTask locationTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d(TAG, "MainActivity onCreate: started");
+
+        connectionTask = new ConnectionTask();
+        connectionTask.execute();
+
+        locationTask = new LocationTask(this);
+
+        initBusinessNames();
+        initRecyclerView();
+
+        //// TEMP BEGINS ////
 
         btnTestServer = (Button) findViewById(R.id.btnTestServer);
 
@@ -41,40 +66,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.d(TAG, "onCreate: started");
-
-        initBusinessNames();
-        initRecyclerView();
-
+        //// TEMP END /////
     }
+
+    //// TEMP BEGINS (Again) ////
 
     private void testServer(){
-        RatingSender ratingSender = new RatingSender();
-        ratingSender.execute("Message to server from client");
+
+//        LocationTask lt = new LocationTask(this);
+//        Location myLocation = lt.location;
+//        Toast.makeText(this, myLocation.toString(),Toast.LENGTH_SHORT);
+
+//        connectionTask.sendRating(new Rating(new Business("Test business", "business address"),
+//                (float)3,"Successful Rating","Awesome sauce!"));
+
+        Toast.makeText(this, locationTask.status, Toast.LENGTH_LONG).show();
+
+
     }
+
+    /// TEMP ENDS ////
+
+    public static Button btnTestServer;
 
     private void initBusinessNames(){
-        businessArray.add(new Business("Tim Hortons","123 Street Ave. Welland, ON"));
-        businessArray.add(new Business("Wendy's","234 Street Ave. Welland, ON"));
-        businessArray.add(new Business("McDonalds","456 Street Ave. Welland, ON"));
-        businessArray.add(new Business("Burger King","789 Street Ave. Welland, ON"));
+//        businessArray.add(new Business("Tim Hortons","123 Street Ave. Welland, ON"));
+////        businessArray.add(new Business("Wendy's","234 Street Ave. Welland, ON"));
+////        businessArray.add(new Business("McDonalds","456 Street Ave. Welland, ON"));
+////        businessArray.add(new Business("Burger King","789 Street Ave. Welland, ON"));
+
+        businessArray = locationTask.closeBusinesses;
+
     }
 
-    private void initRecyclerView(){
+    public void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.mainRecycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, businessArray);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //build android menu
-        menu.add("Home");
-        menu.add("My Ratings");
-        menu.add("Preferences");
-        menu.add("About");
-        return super.onCreateOptionsMenu(menu);
     }
 
     ///// MENU //////
@@ -100,5 +129,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //build android menu
+        menu.add("Home");
+        menu.add("My Ratings");
+        menu.add("Preferences");
+        menu.add("About");
+        return super.onCreateOptionsMenu(menu);
     }
 }
