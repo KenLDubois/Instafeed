@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.Business;
+import nc.sharedInstafeedClasses.Rating;
 
 public class MyRatingsActivity extends AppCompatActivity {
 
     private ArrayList<Business> businessArray = new ArrayList<Business>();
+    private ArrayList<Rating> myRatingsArray = new ArrayList<Rating>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,15 @@ public class MyRatingsActivity extends AppCompatActivity {
         businessArray.add(new Business("Wendy's","234 Street Ave. Welland, ON"));
         businessArray.add(new Business("McDonalds","456 Street Ave. Welland, ON"));
         businessArray.add(new Business("Burger King","789 Street Ave. Welland, ON"));
+
+        for(int i = 0; i < businessArray.size(); i++){
+            myRatingsArray.add(new Rating(businessArray.get(i),5f,"Awesome title","great description!"));
+        }
     }
 
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.ratings_recyclerView);
-        RatingsRecyclerViewAdapter adapter = new RatingsRecyclerViewAdapter(this, businessArray);
+        RatingsRecyclerViewAdapter adapter = new RatingsRecyclerViewAdapter(this, myRatingsArray);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

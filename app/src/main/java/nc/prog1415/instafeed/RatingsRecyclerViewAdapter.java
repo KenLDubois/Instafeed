@@ -18,16 +18,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.Business;
+import nc.sharedInstafeedClasses.Rating;
 
 public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "RatingsViewAdapter";
 
-    private ArrayList<Business> businessArray = new ArrayList<>();
+    private ArrayList<Rating> ratingArray;
+
     private Context mContext;
 
-    public RatingsRecyclerViewAdapter(Context mContext,ArrayList<Business> _businessArray) {
-        this.businessArray = _businessArray;
+    public RatingsRecyclerViewAdapter(Context mContext,ArrayList<Rating> _ratingArray) {
+        this.ratingArray = _ratingArray;
         this.mContext = mContext;
     }
 
@@ -42,13 +44,13 @@ public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecy
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.businessName.setText(businessArray.get(position).BusinessName);
+        holder.businessName.setText(ratingArray.get(position).RatedBusiness.BusinessName);
 
     }
 
     @Override
     public int getItemCount() {
-        return businessArray.size();
+        return ratingArray.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,6 +58,9 @@ public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecy
         TextView businessName;
         RatingBar ratingBar;
         LinearLayout parentLayout;
+        TextView address;
+        TextView ratingTitle;
+        TextView ratingDescript;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +68,9 @@ public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecy
             businessName = itemView.findViewById(R.id.ratedBusinessName);
             ratingBar = itemView.findViewById(R.id.ratingBarRating);
             parentLayout = itemView.findViewById(R.id.ratings_parent_layout);
+            address = itemView.findViewById(R.id.ratedBusinessAddress);
+            ratingTitle = itemView.findViewById(R.id.txtRatingTitle);
+            ratingDescript = itemView.findViewById(R.id.txtReviewDescription);
         }
     }
 }
