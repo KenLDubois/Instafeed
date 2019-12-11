@@ -32,6 +32,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import nc.sharedInstafeedClasses.Business;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPrefs = this.getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE);
 
-        locationTask = new LocationTask(this);
+        int setMaxResults = sharedPrefs.getInt("maxResults", 5);
+
+        locationTask = new LocationTask(this, setMaxResults);
 
         initBusinessNames();
         initRecyclerView();

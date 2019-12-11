@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import nc.sharedInstafeedClasses.Rating;
+
 class ConnectionTask extends AsyncTask<Void,Void,Void> {
     private static final long serialVersionUID = 1L;
 

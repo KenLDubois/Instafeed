@@ -3,6 +3,8 @@ package nc.prog1415.instafeed;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -34,7 +36,7 @@ public class PreferencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
-        LinearLayout prefsChips = findViewById(R.id.prefsChips);
+//        LinearLayout prefsChips = findViewById(R.id.prefsChips);
 
         txtDisplayName = findViewById(R.id.txtDisplayName);
         final Button btnSavePreferences = findViewById(R.id.btnSavePreferences);
@@ -77,18 +79,18 @@ public class PreferencesActivity extends AppCompatActivity {
             }
         });
 
-        ArrayList<String> chips = new ArrayList<String>(
-                Arrays.asList(
-                        "Coffee Shops",
-                        "Fast Food",
-                        "Restaurants",
-                        "Convenience Stores"));
-
-        for(Integer i = 0; i < chips.size(); i++){
-            Switch newSwitch = new Switch(this);
-            newSwitch.setText(chips.get(i));
-            prefsChips.addView(newSwitch);
-        }
+//        ArrayList<String> chips = new ArrayList<String>(
+//                Arrays.asList(
+//                        "Coffee Shops",
+//                        "Fast Food",
+//                        "Restaurants",
+//                        "Convenience Stores"));
+//
+//        for(Integer i = 0; i < chips.size(); i++){
+//            Switch newSwitch = new Switch(this);
+//            newSwitch.setText(chips.get(i));
+//            prefsChips.addView(newSwitch);
+//        }
     }
     public void savePrefs(){
 
@@ -106,5 +108,40 @@ public class PreferencesActivity extends AppCompatActivity {
         Toast.makeText(this, "Preferences successfully changed.", Toast.LENGTH_SHORT).show();
 
         this.startActivity(i);
+    }
+
+    ///// MENU //////
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getTitle().toString()=="My Ratings"){
+            Intent i = new Intent(this, MyRatingsActivity.class);
+            this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="Preferences"){
+            Intent i = new Intent(this, PreferencesActivity.class);
+            this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="About"){
+            Intent i = new Intent(this, AboutActivity.class);
+            this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="Home"){
+            Intent i = new Intent(this, MainActivity.class);
+            this.startActivity(i);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //build android menu
+        menu.add("Home");
+        menu.add("My Ratings");
+        menu.add("Preferences");
+        menu.add("About");
+        return super.onCreateOptionsMenu(menu);
     }
 }

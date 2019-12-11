@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
+import nc.sharedInstafeedClasses.Business;
+import nc.sharedInstafeedClasses.Rating;
+
 public class RatingDetailsActivity extends AppCompatActivity {
 
     private Business business;
@@ -32,6 +35,7 @@ public class RatingDetailsActivity extends AppCompatActivity {
         txtReview = (TextView) findViewById(R.id.txtReview);
 
         final Button btnSaveReview = findViewById(R.id.btnSaveReview);
+        final Button btnCancelRating = findViewById(R.id.btnCancelRating);
         final TextView txtBusinessName = findViewById(R.id.businessName_detailRating);
         final TextView txtBusinessAddress = findViewById(R.id.businessAddress_detailRating);
 
@@ -41,6 +45,12 @@ public class RatingDetailsActivity extends AppCompatActivity {
         btnSaveReview.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 saveReview();
+            }
+        });
+
+        btnCancelRating.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                returnToMain();
             }
         });
     }
@@ -58,4 +68,11 @@ public class RatingDetailsActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         this.startActivity(i);
     }
+
+    public void returnToMain(){
+        Intent i = new Intent(this, MainActivity.class);
+        this.startActivity(i);
+    }
+
+
 }

@@ -1,13 +1,18 @@
 package nc.prog1415.instafeed;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import nc.sharedInstafeedClasses.Business;
 
 public class MyRatingsActivity extends AppCompatActivity {
 
@@ -34,5 +39,40 @@ public class MyRatingsActivity extends AppCompatActivity {
         RatingsRecyclerViewAdapter adapter = new RatingsRecyclerViewAdapter(this, businessArray);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    ///// MENU //////
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getTitle().toString()=="My Ratings"){
+            Intent i = new Intent(this, MyRatingsActivity.class);
+            this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="Preferences"){
+            Intent i = new Intent(this, PreferencesActivity.class);
+            this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="About"){
+            Intent i = new Intent(this, AboutActivity.class);
+            this.startActivityForResult(i,1);
+        }
+        else if(item.getTitle().toString()=="Home"){
+            Intent i = new Intent(this, MainActivity.class);
+            this.startActivity(i);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //build android menu
+        menu.add("Home");
+        menu.add("My Ratings");
+        menu.add("Preferences");
+        menu.add("About");
+        return super.onCreateOptionsMenu(menu);
     }
 }

@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import nc.sharedInstafeedClasses.Business;
+
 import static android.content.Context.MODE_PRIVATE;
 import static nc.prog1415.instafeed.PreferencesActivity.shared_prefs;
 
@@ -46,12 +48,12 @@ public class LocationTask implements LocationListener {
         }
     };
 
-    public LocationTask(AppCompatActivity _activity){
+    public LocationTask(AppCompatActivity _activity, int setMaxResults){
         activity = _activity;
         manager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
 
 
-        maxResults = 5;
+        maxResults = setMaxResults;
 
         //specify the applications criteria (requirements)
         Criteria criteria = new Criteria();

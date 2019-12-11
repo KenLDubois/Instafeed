@@ -14,23 +14,6 @@
         android:inputType="textPersonName" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Places You are Interested in:" />
-
-    <LinearLayout
-        android:id="@+id/prefsChips"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
-    <TextView
         android:id="@+id/lblMaxResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,4 +34,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save" />
+
 </LinearLayout>
