@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         connectionTask = new ConnectionTask();
         connectionTask.execute();
+
+        SharedPreferences sharedPrefs = this.getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE);
 
         locationTask = new LocationTask(this);
 
