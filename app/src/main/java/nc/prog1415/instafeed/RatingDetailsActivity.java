@@ -1,6 +1,7 @@
 package nc.prog1415.instafeed;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,9 @@ import org.w3c.dom.Text;
 
 import nc.sharedInstafeedClasses.Business;
 import nc.sharedInstafeedClasses.Rating;
+
+import static nc.prog1415.instafeed.MainActivity.locationTask;
+import static nc.prog1415.instafeed.SplashActivity.connectionTask;
 
 public class RatingDetailsActivity extends AppCompatActivity {
 
@@ -57,11 +61,20 @@ public class RatingDetailsActivity extends AppCompatActivity {
 
     public void saveReview(){
 
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_prefs),0);
+        String userName = prefs.getString(getString(R.string.user_name),"Unknown Legend");
+
         Rating rating = new Rating(
-          business, ratingBar.getRating(), txtTitle.getText().toString(),txtReview.getText().toString()
+          business,
+                ratingBar.getRating(),
+                txtTitle.getText().toString(),
+                txtReview.getText().toString(),
+                locationTask.location.getLatitude(),
+                locationTask.location.getLongitude(),
+                userName
         );
 
-        MainActivity.connectionTask.sendRating(rating);
+        connectionTask.sendRating(rating);
 
         Intent i = new Intent(this, MainActivity.class);
         String message = "Your rating for " + business.BusinessName + " has been saved.";

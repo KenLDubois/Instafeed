@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import nc.sharedInstafeedClasses.Business;
-
-import static android.content.Context.MODE_PRIVATE;
-import static nc.prog1415.instafeed.PreferencesActivity.shared_prefs;
+//
+//import static android.content.Context.MODE_PRIVATE;
+//import static nc.prog1415.instafeed.PreferencesActivity.shared_prefs;
 
 public class LocationTask implements LocationListener {
 

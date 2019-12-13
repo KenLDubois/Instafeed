@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Instafeed</string>
+    <string name="ip_address"></string>
+    <string name="shared_prefs">sharedPrefs</string>
+    <string name="user_name">userName</string>
+    <string name="max_results">maxResults</string>
 </resources>

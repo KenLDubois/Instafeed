@@ -8,14 +8,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
+
+    public static ConnectionTask connectionTask;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        SystemClock.sleep(3000);
+//        SystemClock.sleep(3000);
+
+        connectionTask = new ConnectionTask();
+        connectionTask.execute();
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 }

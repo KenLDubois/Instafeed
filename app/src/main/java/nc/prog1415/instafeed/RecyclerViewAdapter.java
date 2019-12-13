@@ -2,6 +2,7 @@ package nc.prog1415.instafeed;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,9 @@ import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.Business;
 import nc.sharedInstafeedClasses.Rating;
+
+import static nc.prog1415.instafeed.MainActivity.locationTask;
+import static nc.prog1415.instafeed.SplashActivity.connectionTask;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -74,12 +78,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
+                SharedPreferences prefs = mContext.getSharedPreferences(mContext.getString(R.string.shared_prefs),0);
+                String userName = prefs.getString(mContext.getString(R.string.user_name),"Unknown Legend");
+
                 Rating quickRating = new Rating(
                         businessArray.get(position),
-                        holder.ratingBar.getRating()
-                        );
+                        holder.ratingBar.getRating(),
+                        locationTask.location.getLatitude(),
+                        locationTask.location.getLongitude(),
+                        userName
+                );
 
-                MainActivity.connectionTask.sendRating(quickRating);
+                connectionTask.sendRating(quickRating);
 
                 String message = "Your rating for " + businessArray.get(position).BusinessName + " has been saved.";
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();

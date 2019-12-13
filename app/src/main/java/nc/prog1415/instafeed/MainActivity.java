@@ -35,13 +35,14 @@ import java.util.ArrayList;
 import nc.sharedInstafeedClasses.Business;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static nc.prog1415.instafeed.SplashActivity.connectionTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     public static ArrayList<Business> businessArray = new ArrayList<Business>();
 
-    public static ConnectionTask connectionTask;
+//    public static ConnectionTask connectionTask;
     public static LocationTask locationTask;
 
     @Override
@@ -50,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "MainActivity onCreate: started");
-
-        connectionTask = new ConnectionTask();
-        connectionTask.execute();
 
         SharedPreferences sharedPrefs = this.getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE);
 
@@ -119,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getTitle().toString()=="My Ratings"){
+
+            connectionTask.sendContentRequest();
+
             Intent i = new Intent(this, MyRatingsActivity.class);
             this.startActivityForResult(i,1);
         }

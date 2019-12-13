@@ -22,9 +22,9 @@ import java.util.Arrays;
 
 public class PreferencesActivity extends AppCompatActivity {
 
-    public static final String shared_prefs = "sharedPrefs";
-    public static final String userName_prefsKey = "userName";
-    public static final String maxResults_prefsKey = "maxResults";
+    public final String shared_prefs = getString(R.string.shared_prefs);
+    public final String userName_prefsKey = getString(R.string.user_name);
+    public final String maxResults_prefsKey = getString(R.string.max_results);
 
     public static SharedPreferences sharedPreferences;
 
