@@ -3,6 +3,7 @@ package nc.prog1415.instafeed;
 import android.content.Context;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.location.Address;
@@ -93,37 +94,41 @@ public class LocationTask implements LocationListener {
                 Geocoder  coder = new Geocoder(activity);
                 //obtain the addresses of the current location
 
-                Iterator<Address> addresses = coder.getFromLocation(location.getLatitude(), location.getLongitude(), maxResults).iterator();
+                int maxIterations = 25;
+                int iterations = 0;
+
+                closeBusinesses.clear();
+
+                Iterator<Address> addresses = coder.getFromLocation(location.getLatitude(), location.getLongitude(), maxIterations).iterator();
                 //process the address details
                 if (addresses != null) {
-                    while (addresses.hasNext()) {
+                    while (addresses.hasNext() && iterations < maxIterations && closeBusinesses.size() < maxResults) {
+
+                        iterations++;
+
                         Address namedLoc = addresses.next();
-                        String city = namedLoc.getLocality();
                         String featureName = namedLoc.getFeatureName();
-                        String country = namedLoc.getCountryName();
-                        String prov = namedLoc.getAdminArea();
-                        String road = namedLoc.getThoroughfare();
-                        info += String.format("\n[%s][%s][%s][%s]", city, featureName, road, country);
-                        int addIdx = namedLoc.getMaxAddressLineIndex();
 
-                        for (int idx = 0; idx <= addIdx; idx++){
-                            String addLine = namedLoc.getAddressLine(idx);
-                            info += String.format("\nLine %d: %s", idx, addLine);
+
+                        // Only show addresses where the 'feature name' is not a number (ie. the first line of the address)
+                        int featureIsNum = -1;
+
+                        try{
+                            featureIsNum = Integer.parseInt(featureName);
+                        }catch (Exception e){}
+
+                        if(featureIsNum == -1){
+
+                            String address = "";
+
+                            for(int i = 0; i <= namedLoc.getMaxAddressLineIndex(); i++){
+                                address += namedLoc.getAddressLine(i) + "\n";
+                            }
+
+                            Business business = new Business(featureName, address);
+
+                            closeBusinesses.add(business);
                         }
-
-                        String address = "";
-
-                        for(int i = 0; i < namedLoc.getMaxAddressLineIndex(); i++){
-                            address += namedLoc.getAddressLine(i) + "\n";
-                        }
-
-                        Business business = new Business(featureName, namedLoc.getAddressLine(0));
-
-//                        Business business = new Business(featureName,featureName + " " + road + ", " + city + "\n" + prov + ", " + country.toUpperCase());
-
-
-
-                        closeBusinesses.add(business);
 
                     }
                 }
@@ -137,6 +142,7 @@ public class LocationTask implements LocationListener {
         }
 
         //display location information to the user
+
         status = info;
     }
 

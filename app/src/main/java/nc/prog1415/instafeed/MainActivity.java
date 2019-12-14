@@ -37,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
         int setMaxResults = sharedPrefs.getInt(getString(R.string.max_results), 5);
 
         locationTask = new LocationTask(this, setMaxResults);
-
         businessArray = locationTask.closeBusinesses;
         initRecyclerView();
 
     }
+
 
     public void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.mainRecycler_view);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, AboutActivity.class);
             this.startActivityForResult(i,1);
         }
-        else if(item.getTitle().toString()=="Home"){
+        else if(item.getTitle().toString()=="Refresh My Location"){
             Intent i = new Intent(this, MainActivity.class);
             this.startActivity(i);
         }
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //build android menu
-        menu.add("Home");
+        menu.add("Refresh My Location");
         menu.add("My Ratings");
         menu.add("Preferences");
         menu.add("About");
