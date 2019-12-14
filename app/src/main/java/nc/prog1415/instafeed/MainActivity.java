@@ -7,35 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.Business;
 import nc.sharedInstafeedClasses.ContentRequest;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 import static nc.prog1415.instafeed.SplashActivity.connectionTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static ArrayList<Business> businessArray = new ArrayList<Business>();
 
-//    public static ConnectionTask connectionTask;
     public static LocationTask locationTask;
 
     @Override
@@ -53,26 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "MainActivity onCreate: started");
 
-        SharedPreferences sharedPrefs = this.getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE);
-
-        int setMaxResults = sharedPrefs.getInt("maxResults", 5);
+        SharedPreferences sharedPrefs = this.getSharedPreferences(getString(R.string.shared_prefs),Context.MODE_PRIVATE);
+        int setMaxResults = sharedPrefs.getInt(getString(R.string.max_results), 5);
 
         locationTask = new LocationTask(this, setMaxResults);
 
-        initBusinessNames();
-        initRecyclerView();
-
-    }
-
-    public static Button btnTestServer;
-
-    private void initBusinessNames(){
-//        businessArray.add(new Business("Tim Hortons","123 Street Ave. Welland, ON"));
-////        businessArray.add(new Business("Wendy's","234 Street Ave. Welland, ON"));
-////        businessArray.add(new Business("McDonalds","456 Street Ave. Welland, ON"));
-////        businessArray.add(new Business("Burger King","789 Street Ave. Welland, ON"));
-
         businessArray = locationTask.closeBusinesses;
+        initRecyclerView();
 
     }
 

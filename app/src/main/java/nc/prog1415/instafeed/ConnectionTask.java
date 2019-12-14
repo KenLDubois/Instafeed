@@ -1,16 +1,12 @@
 package nc.prog1415.instafeed;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -26,16 +22,19 @@ class ConnectionTask extends AsyncTask<Void,Void,Void> {
     private static ObjectInputStream in;
     private static ObjectOutputStream out;
 
-    public static String feedback = "don't forget to get rid of this variable";
-
     public static ArrayList<Rating> receivedRatings = new ArrayList<Rating>();
 
     public static boolean receiveInput = false;
 
-    private String IPAddress =  "192.168.56.1";
-    private int PortNum = 8000;
+    private String IPAddress; // = "192.168.56.1";
+    private int PortNum; // = 8000;
 
     private static final String TAG = "ConnectionTask";
+
+    public void setNetworkContext(Context context){
+        IPAddress = context.getString(R.string.ip_address);
+        PortNum = Integer.parseInt(context.getString(R.string.port_number));
+    }
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -67,15 +66,6 @@ class ConnectionTask extends AsyncTask<Void,Void,Void> {
         }
     }
 
-//    public static void sendMessage(String message) {
-////        try {
-////            out.writeObject(message);
-////            out.flush();
-////        } catch (IOException e1) {
-////            e1.printStackTrace();
-////        }
-////    }
-
     public void sendContentRequest(ContentRequest contentRequest){
 
         receivedRatings.clear();
@@ -98,15 +88,10 @@ class ConnectionTask extends AsyncTask<Void,Void,Void> {
                 while(true){
                     try {
                         Object obj = in.readObject();
-//                        if(obj instanceof String){
-//                            feedback = obj.toString();
-//                        }
 
                         if(obj instanceof ArrayList){
                             if(((ArrayList) obj).size() > 0 && ((ArrayList) obj).get(0) instanceof  Rating){
                                 receivedRatings = (ArrayList<Rating>)obj;
-                                feedback = "weeeeee got em! (" + receivedRatings.size() + ")";
-                                //receiveInput = false;
                             }
                         }
 

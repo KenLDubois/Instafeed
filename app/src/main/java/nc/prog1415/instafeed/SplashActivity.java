@@ -1,5 +1,6 @@
 package nc.prog1415.instafeed;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         connectionTask = new ConnectionTask();
+        connectionTask.setNetworkContext(getApplicationContext());
         connectionTask.execute();
 
         Intent intent = new Intent(this, MainActivity.class);

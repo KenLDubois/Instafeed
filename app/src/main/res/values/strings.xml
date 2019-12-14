@@ -1,4 +1,10 @@
 <resources>
+
+    <!--  ip_address AND port_number MUST BE CONFIGURED TO YOUR MACHINE  -->
+
+    <string name="ip_address">192.168.56.1</string>
+    <string name="port_number">8000</string>
+
     <string name="app_name">Instafeed</string>
     <string name="shared_prefs">sharedPrefs</string>
     <string name="user_name">userName</string>
