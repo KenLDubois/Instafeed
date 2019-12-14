@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.ContentRequest;
 import nc.sharedInstafeedClasses.Rating;
@@ -24,9 +26,13 @@ class ConnectionTask extends AsyncTask<Void,Void,Void> {
     private static ObjectInputStream in;
     private static ObjectOutputStream out;
 
-    public static String feedback;
+    public static String feedback = "don't forget to get rid of this variable";
 
-    private String IPAddress = "192.168.56.1";
+    public static ArrayList<Rating> receivedRatings = new ArrayList<Rating>();
+
+    public static boolean receiveInput = false;
+
+    private String IPAddress =  "192.168.56.1";
     private int PortNum = 8000;
 
     private static final String TAG = "ConnectionTask";
@@ -61,21 +67,25 @@ class ConnectionTask extends AsyncTask<Void,Void,Void> {
         }
     }
 
-    public static void sendMessage(String message) {
-        try {
-            out.writeObject(message);
-            out.flush();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-    }
+//    public static void sendMessage(String message) {
+////        try {
+////            out.writeObject(message);
+////            out.flush();
+////        } catch (IOException e1) {
+////            e1.printStackTrace();
+////        }
+////    }
 
-    public static void sendContentRequest(){
+    public void sendContentRequest(ContentRequest contentRequest){
+
+        receivedRatings.clear();
+
         try{
-            out.writeObject(new ContentRequest());
+            out.writeObject(contentRequest);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     class ReceiveContent implements Runnable{
@@ -88,9 +98,18 @@ class ConnectionTask extends AsyncTask<Void,Void,Void> {
                 while(true){
                     try {
                         Object obj = in.readObject();
-                        if(obj instanceof String){
-                            feedback = obj.toString();
+//                        if(obj instanceof String){
+//                            feedback = obj.toString();
+//                        }
+
+                        if(obj instanceof ArrayList){
+                            if(((ArrayList) obj).size() > 0 && ((ArrayList) obj).get(0) instanceof  Rating){
+                                receivedRatings = (ArrayList<Rating>)obj;
+                                feedback = "weeeeee got em! (" + receivedRatings.size() + ")";
+                                //receiveInput = false;
+                            }
                         }
+
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

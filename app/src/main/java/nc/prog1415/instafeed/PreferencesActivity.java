@@ -22,10 +22,6 @@ import java.util.Arrays;
 
 public class PreferencesActivity extends AppCompatActivity {
 
-    public final String shared_prefs = getString(R.string.shared_prefs);
-    public final String userName_prefsKey = getString(R.string.user_name);
-    public final String maxResults_prefsKey = getString(R.string.max_results);
-
     public static SharedPreferences sharedPreferences;
 
     public TextView txtDisplayName;
@@ -41,13 +37,13 @@ public class PreferencesActivity extends AppCompatActivity {
         txtDisplayName = findViewById(R.id.txtDisplayName);
         final Button btnSavePreferences = findViewById(R.id.btnSavePreferences);
 
-        sharedPreferences = getSharedPreferences(shared_prefs,MODE_PRIVATE);
-        txtDisplayName.setText(sharedPreferences.getString(userName_prefsKey, "Unknown Legend"));
+        sharedPreferences = getSharedPreferences(getString(R.string.shared_prefs),MODE_PRIVATE);
+        txtDisplayName.setText(sharedPreferences.getString(getString(R.string.user_name), "Unknown Legend"));
 
         final TextView lblMaxResults = (TextView) findViewById(R.id.lblMaxResults);
         final SeekBar seekMaxResults = (SeekBar) findViewById(R.id.seekMaxResults);
 
-        maxResults = sharedPreferences.getInt(maxResults_prefsKey,3);
+        maxResults = sharedPreferences.getInt(getString(R.string.max_results),3);
 
         seekMaxResults.setProgress(maxResults);
         lblMaxResults.setText("Max Results: " + maxResults);
@@ -97,51 +93,16 @@ public class PreferencesActivity extends AppCompatActivity {
 
         Intent i = new Intent(this, MainActivity.class);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(shared_prefs,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_prefs),MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String userName = txtDisplayName.getText().toString();
-        editor.putString(userName_prefsKey, userName);
-        editor.putInt(maxResults_prefsKey,maxResults);
+        editor.putString(getString(R.string.user_name), userName);
+        editor.putInt(getString(R.string.max_results),maxResults);
 
         editor.apply();
 
         Toast.makeText(this, "Preferences successfully changed.", Toast.LENGTH_SHORT).show();
 
         this.startActivity(i);
-    }
-
-    ///// MENU //////
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(item.getTitle().toString()=="My Ratings"){
-            Intent i = new Intent(this, MyRatingsActivity.class);
-            this.startActivityForResult(i,1);
-        }
-        else if(item.getTitle().toString()=="Preferences"){
-            Intent i = new Intent(this, PreferencesActivity.class);
-            this.startActivityForResult(i,1);
-        }
-        else if(item.getTitle().toString()=="About"){
-            Intent i = new Intent(this, AboutActivity.class);
-            this.startActivityForResult(i,1);
-        }
-        else if(item.getTitle().toString()=="Home"){
-            Intent i = new Intent(this, MainActivity.class);
-            this.startActivity(i);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //build android menu
-        menu.add("Home");
-        menu.add("My Ratings");
-        menu.add("Preferences");
-        menu.add("About");
-        return super.onCreateOptionsMenu(menu);
     }
 }

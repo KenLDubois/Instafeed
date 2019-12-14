@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.Business;
+import nc.sharedInstafeedClasses.ContentRequest;
 import nc.sharedInstafeedClasses.Rating;
 
 import static nc.prog1415.instafeed.MainActivity.locationTask;
@@ -56,7 +57,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + businessArray.get(position).BusinessName);
 
+                connectionTask.sendContentRequest(new ContentRequest(businessArray.get(position)));
+
                 Intent i = new Intent(mContext, MyRatingsActivity.class);
+                i.putExtra("heading","What people are saying about " + businessArray.get(position).BusinessName);
                 mContext.startActivity(i);
 
             }

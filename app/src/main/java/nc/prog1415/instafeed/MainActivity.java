@@ -33,6 +33,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import nc.sharedInstafeedClasses.Business;
+import nc.sharedInstafeedClasses.ContentRequest;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static nc.prog1415.instafeed.SplashActivity.connectionTask;
@@ -61,36 +62,7 @@ public class MainActivity extends AppCompatActivity {
         initBusinessNames();
         initRecyclerView();
 
-        //// TEMP BEGINS ////
-
-        btnTestServer = (Button) findViewById(R.id.btnTestServer);
-
-        btnTestServer.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                testServer();
-            }
-        });
-
-        //// TEMP END /////
     }
-
-    //// TEMP BEGINS (Again) ////
-
-    private void testServer(){
-
-//        LocationTask lt = new LocationTask(this);
-//        Location myLocation = lt.location;
-//        Toast.makeText(this, myLocation.toString(),Toast.LENGTH_SHORT);
-
-//        connectionTask.sendRating(new Rating(new Business("Test business", "business address"),
-//                (float)3,"Successful Rating","Awesome sauce!"));
-
-        Toast.makeText(this, locationTask.status, Toast.LENGTH_LONG).show();
-
-
-    }
-
-    /// TEMP ENDS ////
 
     public static Button btnTestServer;
 
@@ -116,11 +88,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_prefs),0);
+        String userName = sharedPreferences.getString(getString(R.string.user_name), "Unknown Legend");
+
         if(item.getTitle().toString()=="My Ratings"){
 
-            connectionTask.sendContentRequest();
+
+            connectionTask.sendContentRequest(new ContentRequest(userName));
 
             Intent i = new Intent(this, MyRatingsActivity.class);
+            i.putExtra("heading", "My Reviews");
             this.startActivityForResult(i,1);
         }
         else if(item.getTitle().toString()=="Preferences"){

@@ -45,6 +45,10 @@ public class RatingsRecyclerViewAdapter extends RecyclerView.Adapter<RatingsRecy
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.businessName.setText(ratingArray.get(position).RatedBusiness.BusinessName);
+        holder.address.setText(ratingArray.get(position).RatedBusiness.Address);
+        holder.ratingBar.setRating(ratingArray.get(position).StarRating);
+        holder.ratingTitle.setText(ratingArray.get(position).Title);
+        holder.ratingDescript.setText(ratingArray.get(position).Description);
 
     }
 
